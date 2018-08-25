@@ -1,0 +1,9 @@
+﻿<ExtensionModel>
+	<Runtime>
+		<Import assembly="MonoDevelop.LogMonitor.dll" />
+	</Runtime>
+
+	<Extension path="/MonoDevelop/Ide/StartupHandlers">
+		<Class class="MonoDevelop.LogMonitor.LogMonitorStartupHandler" />
+	</Extension>
+</ExtensionModel>
