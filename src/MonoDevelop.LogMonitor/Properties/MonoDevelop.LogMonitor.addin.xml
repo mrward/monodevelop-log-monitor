@@ -6,4 +6,14 @@
 	<Extension path="/MonoDevelop/Ide/StartupHandlers">
 		<Class class="MonoDevelop.LogMonitor.LogMonitorStartupHandler" />
 	</Extension>
+
+	<Extension path="/MonoDevelop/Ide/Pads">
+		<Pad
+			id="MonoDevelop.LogMonitor.LogMonitorPad"
+			_label="IDE Log Viewer"
+			class="MonoDevelop.LogMonitor.Gui.LogMonitorPad"
+			defaultPlacement="Bottom"
+			defaultStatus="AutoHide"
+			defaultLayout="*" />
+	</Extension>
 </ExtensionModel>

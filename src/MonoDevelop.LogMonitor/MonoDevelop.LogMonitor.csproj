@@ -30,6 +30,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -37,6 +38,13 @@
     <Compile Include="MonoDevelop.LogMonitor\LogMonitorStartupHandler.cs" />
     <Compile Include="MonoDevelop.LogMonitor\LogMonitorLogger.cs" />
     <Compile Include="MonoDevelop.LogMonitor\LogMonitorCrashReporter.cs" />
+    <Compile Include="MonoDevelop.LogMonitor.Gui\LogMonitorPad.cs" />
+    <Compile Include="MonoDevelop.LogMonitor.Gui\LogMonitorWidget.cs" />
+    <Compile Include="MonoDevelop.LogMonitor.Gui\LogMonitorWidget.UI.cs">
+      <DependentUpon>LogMonitorWidget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MonoDevelop.LogMonitor\LogMonitorMessages.cs" />
+    <Compile Include="MonoDevelop.LogMonitor\LogMessageEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\MonoDevelop.LogMonitor.addin.xml" />
