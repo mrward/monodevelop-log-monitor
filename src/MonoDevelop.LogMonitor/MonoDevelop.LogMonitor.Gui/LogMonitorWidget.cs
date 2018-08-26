@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Linq;
 using MonoDevelop.Core;
 using MonoDevelop.Core.Logging;
@@ -39,6 +40,7 @@ namespace MonoDevelop.LogMonitor.Gui
 		{
 			Build ();
 
+			listView.SelectionChanged += ListViewSelectionChanged;
 			LogMonitorMessages.MessageLogged += LogMessageLogged;
 		}
 
@@ -106,6 +108,21 @@ namespace MonoDevelop.LogMonitor.Gui
 		static string GetListMessage (string message)
 		{
 			return message.Split ('\n').FirstOrDefault () ?? string.Empty;
+		}
+
+		void ListViewSelectionChanged (object sender, EventArgs e)
+		{
+			logView.Clear ();
+
+			int row = listView.SelectedRow;
+			if (row < 0) {
+				return;
+			}
+
+			LogMessageEventArgs logMessage = listStore.GetValue (row, logMessageField);
+			if (logMessage != null) {
+				logView.WriteText (null, logMessage.Message);
+			}
 		}
 	}
 }
