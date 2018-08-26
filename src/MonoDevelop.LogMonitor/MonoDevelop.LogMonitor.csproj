@@ -45,6 +45,7 @@
     </Compile>
     <Compile Include="MonoDevelop.LogMonitor\LogMonitorMessages.cs" />
     <Compile Include="MonoDevelop.LogMonitor\LogMessageEventArgs.cs" />
+    <Compile Include="MonoDevelop.LogMonitor\CurrentIdeLogFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\MonoDevelop.LogMonitor.addin.xml" />
