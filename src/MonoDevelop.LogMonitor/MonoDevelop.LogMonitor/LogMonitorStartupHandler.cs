@@ -34,6 +34,7 @@ namespace MonoDevelop.LogMonitor
 		protected override void Run ()
 		{
 			LoggingService.AddLogger (new LogMonitorLogger ());
+			CurrentIdeLogFile.Update ();
 		}
 	}
 }

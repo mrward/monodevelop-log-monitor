@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.IO;
 using MonoDevelop.Core;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui;
@@ -38,7 +39,19 @@ namespace MonoDevelop.LogMonitor
 			FileName = UserProfile.Current.LogDir.Combine ("Ide.log");
 		}
 
-		public static FilePath FileName { get; }
+		public static FilePath FileName { get; private set; }
+
+		public static void Update ()
+		{
+			try {
+				if (!File.Exists (FileName))
+					return;
+
+				FileName = FileName.ResolveLinks ();
+			} catch (Exception ex) {
+				LoggingService.LogError ("Unable to resolve IDE log filename", ex);
+			}
+		}
 
 		public static void Open ()
 		{
