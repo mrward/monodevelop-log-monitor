@@ -79,7 +79,7 @@ namespace MonoDevelop.LogMonitor
 		{
 			Runtime.RunInMainThread (() => {
 				if (statusBarIcon == null) {
-					var icon = ImageService.GetIcon ("md-text-file-icon", Gtk.IconSize.Menu);
+					var icon = ImageService.GetIcon (Stock.TextFileIcon, Gtk.IconSize.Menu);
 					statusBarIcon = IdeApp.Workbench.StatusBar.ShowStatusIcon (icon);
 					statusBarIcon.Clicked += StatusBarIconClicked;
 				}
