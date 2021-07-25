@@ -89,6 +89,12 @@ namespace MonoDevelop.LogMonitor.Gui
 			// Set initial widths for the list view columns.
 			SetInitialListViewColumnWidths ();
 
+			var splitView = paned.Surface.NativeWidget as NSSplitView;
+			if (splitView != null) {
+				splitView.Identifier = "MonoDevelop.LogMonitor.LogMonitorPad.SplitView";
+				splitView.AutosaveName = "MonoDevelop.LogMonitor.LogMonitorPad.SplitView.Autosave";
+			}
+
 			Content = paned;
 		}
 
