@@ -29,6 +29,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
@@ -46,6 +47,7 @@
     <Compile Include="MonoDevelop.LogMonitor\LogMonitorMessages.cs" />
     <Compile Include="MonoDevelop.LogMonitor\LogMessageEventArgs.cs" />
     <Compile Include="MonoDevelop.LogMonitor\CurrentIdeLogFile.cs" />
+    <Compile Include="MonoDevelop.LogMonitor\LogMonitorCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\MonoDevelop.LogMonitor.addin.xml" />

@@ -25,10 +25,8 @@
 // THE SOFTWARE.
 
 using System;
-using Gtk;
 using MonoDevelop.Components;
-using MonoDevelop.Components.Docking;
-using MonoDevelop.Core;
+using MonoDevelop.Components.Declarative;
 using MonoDevelop.Ide.Gui;
 
 namespace MonoDevelop.LogMonitor.Gui
@@ -37,32 +35,31 @@ namespace MonoDevelop.LogMonitor.Gui
 	{
 		LogMonitorWidget widget;
 		Control control;
+		PadToolbarButtonItem openIdeLogButton;
 
 		public override Control Control {
 			get {
 				if (control == null) {
 					widget = new LogMonitorWidget ();
-					control = widget.ToGtkWidget ();
+					control = new XwtControl (widget);
 				}
-				return control;
+				// Returning control does not work.
+				return control.GetNativeWidget<AppKit.NSView> ();
 			}
-		}
-
-		protected override void Initialize (IPadWindow window)
-		{
-			var toolbar = window.GetToolbar (DockPositionType.Right);
-
-			var openIdeLogButton = new Button (new ImageView (Ide.Gui.Stock.TextFileIcon, IconSize.Menu));
-			openIdeLogButton.Clicked += OnOpenIdeLogButtonClick;
-			openIdeLogButton.TooltipText = GettextCatalog.GetString ("Open IDE log");
-			toolbar.Add (openIdeLogButton);
-
-			toolbar.ShowAll ();
 		}
 
 		void OnOpenIdeLogButtonClick (object sender, EventArgs e)
 		{
 			CurrentIdeLogFile.Open ();
+		}
+
+		public override void Dispose ()
+		{
+			if (openIdeLogButton != null) {
+				openIdeLogButton.Clicked -= OnOpenIdeLogButtonClick;
+				openIdeLogButton = null;
+			}
+			base.Dispose ();
 		}
 	}
 }

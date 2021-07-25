@@ -24,10 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using AppKit;
+using CoreGraphics;
+using MonoDevelop.Core;
+using MonoDevelop.Ide.Gui.Components.LogView;
 using Xwt;
 using Xwt.Drawing;
-using MonoDevelop.Core;
-using MonoDevelop.Ide.Gui.Components;
 
 namespace MonoDevelop.LogMonitor.Gui
 {
@@ -40,7 +43,7 @@ namespace MonoDevelop.LogMonitor.Gui
 		DataField<string> logMessageTypeField = new DataField<string> ();
 		DataField<string> logMessageTextField = new DataField<string> ();
 		DataField<LogMessageEventArgs> logMessageField = new DataField<LogMessageEventArgs> ();
-		LogView logView;
+		LogViewController logViewController;
 
 		void Build ()
 		{
@@ -71,13 +74,36 @@ namespace MonoDevelop.LogMonitor.Gui
 			column.Title = GettextCatalog.GetString ("Message");
 			column.Views.Add (new TextCellView (logMessageTextField));
 			column.CanResize = true;
+			column.Expands = true;
 			listView.Columns.Add (column);
 
-			logView = new LogView ();
-			logView.ShowAll ();
+			logViewController = new LogViewController ("LogMonitor");
+			var logView = logViewController.Control.GetNativeWidget<NSView> ();
 			paned.Panel2.Content = Toolkit.CurrentEngine.WrapWidget (logView, NativeWidgetSizing.DefaultPreferredSize);
 
+			// Set an initial width for the list view. Otherwise the splitter is all the way
+			// over to the right hand side of the pad Window.
+			var view = listView.Surface.NativeWidget as NSView;
+			view.SetFrameSize (new CGSize (600, view.Frame.Size.Height));
+
+			// Set initial widths for the list view columns.
+			SetInitialListViewColumnWidths ();
+
 			Content = paned;
+		}
+
+		void SetInitialListViewColumnWidths ()
+		{
+			var view = listView.Surface.NativeWidget as NSView;
+			if (view is NSScrollView scroll) {
+				view = scroll.DocumentView as NSView;
+			}
+
+			var tableView = view as NSTableView;
+			if (tableView != null) {
+				var columns = tableView.TableColumns ();
+				columns[1].Width = 50;
+			}
 		}
 	}
 }

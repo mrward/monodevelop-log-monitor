@@ -1,10 +1,10 @@
 ﻿//
-// AddinInfo.cs
+// LogMonitorCommands.cs
 //
 // Author:
 //       Matt Ward <matt.ward@microsoft.com>
 //
-// Copyright (c) 2018 Microsoft
+// Copyright (c) 2021 Microsoft Corporation
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,16 +23,11 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using Mono.Addins;
 
-[assembly: Addin (
-	"LogMonitor",
-	Namespace = "MonoDevelop",
-	Version = "0.2",
-	Category = "IDE extensions")]
-
-[assembly: AddinName ("Log Monitor")]
-[assembly: AddinDescription ("Monitors the IDE log for errors")]
-
-[assembly: AddinDependency ("Core", "17.0")]
-[assembly: AddinDependency ("Ide", "17.0")]
+namespace MonoDevelop.LogMonitor
+{
+	enum LogMonitorCommands
+	{
+		OpenLogFile
+	}
+}

@@ -26,22 +26,47 @@
 
 using System;
 using System.Linq;
+using AppKit;
+using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
 using MonoDevelop.Core.Logging;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui;
+using MonoDevelop.Ide.Gui.Components.LogView;
+using Xwt;
 using Xwt.Drawing;
 
 namespace MonoDevelop.LogMonitor.Gui
 {
 	partial class LogMonitorWidget
 	{
+		LogViewProgressMonitor progressMonitor;
+
 		public LogMonitorWidget ()
 		{
 			Build ();
 
+			// Need to create a progress monitor to avoid a null reference exception
+			// when LogViewController.WriteText is called.
+			progressMonitor = (LogViewProgressMonitor)logViewController.GetProgressMonitor();
+
 			listView.SelectionChanged += ListViewSelectionChanged;
+			listView.RowActivated += ListViewRowActivated;
+			listView.ButtonPressed += ListViewButtonPressed;
+
 			LogMonitorMessages.MessageLogged += LogMessageLogged;
+		}
+
+		protected override void Dispose (bool disposing)
+		{
+			if (disposing) {
+				listView.SelectionChanged -= ListViewSelectionChanged;
+				listView.RowActivated -= ListViewRowActivated;
+				listView.ButtonPressed -= ListViewButtonPressed;
+
+				LogMonitorMessages.MessageLogged -= LogMessageLogged;
+			}
+			base.Dispose (disposing);
 		}
 
 		void LogMessageLogged (object sender, LogMessageEventArgs e)
@@ -112,7 +137,7 @@ namespace MonoDevelop.LogMonitor.Gui
 
 		void ListViewSelectionChanged (object sender, EventArgs e)
 		{
-			logView.Clear ();
+			logViewController.Clear ();
 
 			int row = listView.SelectedRow;
 			if (row < 0) {
@@ -121,8 +146,30 @@ namespace MonoDevelop.LogMonitor.Gui
 
 			LogMessageEventArgs logMessage = listStore.GetValue (row, logMessageField);
 			if (logMessage != null) {
-				logView.WriteText (null, logMessage.Message);
+				logViewController.WriteText (progressMonitor, logMessage.Message);
 			}
+		}
+
+		void ListViewRowActivated (object sender, ListViewRowEventArgs e)
+		{
+			CurrentIdeLogFile.Open ();
+		}
+
+		void ListViewButtonPressed (object sender, ButtonEventArgs e)
+		{
+			if (!e.IsContextMenuTrigger) {
+				return;
+			}
+
+			var commands = IdeApp.CommandService.CreateCommandEntrySet ("/MonoDevelop/LogMonitorPad/ContextMenu");
+			var view = listView.Surface.NativeWidget as NSView;
+			IdeApp.CommandService.ShowContextMenu (view, (int)e.X, (int)e.Y, commands, this);
+		}
+
+		[CommandHandler (LogMonitorCommands.OpenLogFile)]
+		void OpenLogFile ()
+		{
+			CurrentIdeLogFile.Open ();
 		}
 	}
 }

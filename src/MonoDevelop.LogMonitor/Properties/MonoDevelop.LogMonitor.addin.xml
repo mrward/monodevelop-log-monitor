@@ -16,4 +16,22 @@
 			defaultStatus="AutoHide"
 			defaultLayout="*" />
 	</Extension>
+
+	<Extension path="/MonoDevelop/Ide/Commands">
+		<Category _name="Log Monitor" id="LogMonitor">
+			<Command
+				id="MonoDevelop.LogMonitor.LogMonitorCommands.OpenLogFile"
+				_description="Opens the IDE log file"
+				_label="_Open Log File" />
+		</Category>
+	</Extension>
+
+	<ExtensionPoint path="/MonoDevelop/LogMonitorPad/ContextMenu" name="IDE Log Viewer context menu">
+		<Description>IDE Log Viewer pad context menu.</Description>
+		<ExtensionNodeSet id="MonoDevelop.Components.Commands.ItemSet" />
+	</ExtensionPoint>
+
+	<Extension path="/MonoDevelop/LogMonitorPad/ContextMenu">
+		<CommandItem id="MonoDevelop.LogMonitor.LogMonitorCommands.OpenLogFile" />
+	</Extension>
 </ExtensionModel>
