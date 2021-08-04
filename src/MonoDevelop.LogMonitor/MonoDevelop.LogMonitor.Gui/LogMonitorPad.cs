@@ -24,9 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using MonoDevelop.Components;
-using MonoDevelop.Components.Declarative;
 using MonoDevelop.Ide.Gui;
 
 namespace MonoDevelop.LogMonitor.Gui
@@ -35,7 +33,6 @@ namespace MonoDevelop.LogMonitor.Gui
 	{
 		LogMonitorWidget widget;
 		Control control;
-		PadToolbarButtonItem openIdeLogButton;
 
 		public override Control Control {
 			get {
@@ -48,16 +45,11 @@ namespace MonoDevelop.LogMonitor.Gui
 			}
 		}
 
-		void OnOpenIdeLogButtonClick (object sender, EventArgs e)
-		{
-			CurrentIdeLogFile.Open ();
-		}
-
 		public override void Dispose ()
 		{
-			if (openIdeLogButton != null) {
-				openIdeLogButton.Clicked -= OnOpenIdeLogButtonClick;
-				openIdeLogButton = null;
+			if (widget != null) {
+				widget.Dispose ();
+				widget = null;
 			}
 			base.Dispose ();
 		}
