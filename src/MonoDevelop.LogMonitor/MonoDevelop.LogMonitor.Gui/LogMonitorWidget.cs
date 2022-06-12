@@ -118,15 +118,15 @@ namespace MonoDevelop.LogMonitor.Gui
 			switch (level) {
 				case LogLevel.Error:
 				case LogLevel.Fatal:
-					return ImageService.GetIcon (Stock.Error, Gtk.IconSize.Menu);
+					return ImageService.GetIcon (Stock.Error, IconSize.Small);
 				case LogLevel.Warn:
-					return ImageService.GetIcon (Stock.Warning, Gtk.IconSize.Menu);
+					return ImageService.GetIcon (Stock.Warning, IconSize.Small);
 				case LogLevel.Info:
-					return ImageService.GetIcon (Stock.Information, Gtk.IconSize.Menu);
+					return ImageService.GetIcon (Stock.Information, IconSize.Small);
 				case LogLevel.Debug:
-					return ImageService.GetIcon (Stock.Console, Gtk.IconSize.Menu);
+					return ImageService.GetIcon (Stock.Console, IconSize.Small);
 				default:
-					return ImageService.GetIcon (Stock.Error, Gtk.IconSize.Menu);
+					return ImageService.GetIcon (Stock.Error, IconSize.Small);
 			}
 		}
 
