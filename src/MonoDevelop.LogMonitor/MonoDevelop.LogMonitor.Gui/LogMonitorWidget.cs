@@ -205,6 +205,12 @@ namespace MonoDevelop.LogMonitor.Gui
 			}
 		}
 
+		[CommandUpdateHandler (LogMonitorCommands.OpenLogFile)]
+		void OnOpenLogFile (CommandInfo info)
+		{
+			info.Enabled = CurrentIdeLogFile.CanOpen;
+		}
+
 		[CommandHandler (LogMonitorCommands.OpenLogFile)]
 		void OpenLogFile ()
 		{

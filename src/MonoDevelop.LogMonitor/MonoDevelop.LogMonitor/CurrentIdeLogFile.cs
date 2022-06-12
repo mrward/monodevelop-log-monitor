@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.IO;
 using MonoDevelop.Core;
 using MonoDevelop.Ide;
 using MonoDevelop.Ide.Gui;
@@ -36,25 +35,25 @@ namespace MonoDevelop.LogMonitor
 	{
 		static CurrentIdeLogFile ()
 		{
-			FileName = UserProfile.Current.LogDir.Combine ("Ide.log");
+			FileName = LoggingService.RedirectedOutputFilename;
 		}
 
 		public static FilePath FileName { get; private set; }
 
 		public static void Update ()
 		{
-			try {
-				if (!File.Exists (FileName))
-					return;
+			// Ensure class is initialized.
+		}
 
-				FileName = FileName.ResolveLinks ();
-			} catch (Exception ex) {
-				LoggingService.LogError ("Unable to resolve IDE log filename", ex);
-			}
+		public static bool CanOpen {
+			get { return !FileName.IsNullOrEmpty; }
 		}
 
 		public static void Open ()
 		{
+			if (!CanOpen)
+				return;
+
 			var fileInfo = new FileOpenInformation (FileName);
 			IdeApp.Workbench.OpenDocument (fileInfo).Ignore ();
 		}
