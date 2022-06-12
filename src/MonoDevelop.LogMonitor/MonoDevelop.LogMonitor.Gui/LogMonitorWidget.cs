@@ -27,6 +27,7 @@
 using System;
 using System.Linq;
 using AppKit;
+using CoreGraphics;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
 using MonoDevelop.Core.Logging;
@@ -163,7 +164,45 @@ namespace MonoDevelop.LogMonitor.Gui
 
 			var commands = IdeApp.CommandService.CreateCommandEntrySet ("/MonoDevelop/LogMonitorPad/ContextMenu");
 			var view = listView.Surface.NativeWidget as NSView;
-			IdeApp.CommandService.ShowContextMenu (view, (int)e.X, (int)e.Y, commands, this);
+			var menu = IdeApp.CommandService.CreateNSMenu (commands, this);
+			ShowContextMenu (view, (int)e.X, (int)e.Y, menu);
+		}
+
+		/// <summary>
+		/// Take from main/src/core/MonoDevelop.Ide/MonoDevelop.Components/ContextMenuExtensionsMac.cs
+		/// </summary>
+		static void ShowContextMenu (NSView parent, int x, int y, NSMenu menu, bool selectFirstItem = false, bool convertToViewCoordinates = true)
+		{
+			if (parent == null)
+				throw new ArgumentNullException ("parent");
+			if (menu == null)
+				throw new ArgumentNullException ("menu");
+
+			var pt = convertToViewCoordinates ? parent.ConvertPointToView (new CGPoint (x, y), null) : new CGPoint (x, y);
+			if (selectFirstItem) {
+				menu.PopUpMenu (menu.ItemAt (0), pt, parent);
+			} else {
+				var tmp_event = NSEvent.MouseEvent (NSEventType.LeftMouseDown,
+												pt,
+												0, 0,
+												parent.Window.WindowNumber,
+												null, 0, 0, 0);
+
+				// the following lines are here to dianose & fix VSTS 1026106 - we were getting
+				// a SigSegv from here and it is likely caused by NSEvent being null, however
+				// it's worth leaving Debug checks in just to be on the safe side
+				if (tmp_event == null) {
+					// since this is often called outside of a try/catch loop, we'll just
+					// log an error and not throw the exception
+					LoggingService.LogInternalError (new ArgumentNullException (nameof (tmp_event)));
+					return;
+				}
+
+				System.Diagnostics.Debug.Assert (parent != null, "Parent was modified (set to null) during execution.");
+				System.Diagnostics.Debug.Assert (menu != null, "Menu was modified (set to null) during execution.");
+
+				NSMenu.PopUpContextMenu (menu, tmp_event, parent);
+			}
 		}
 
 		[CommandHandler (LogMonitorCommands.OpenLogFile)]

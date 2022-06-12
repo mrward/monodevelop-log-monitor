@@ -1,22 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project>
   <PropertyGroup>
     <MDBinDir>\Applications\Visual Studio %28Preview%29.app\Contents\MonoBundle</MDBinDir>
     <MDBinDir Condition=" '$(MDBinDir)' == '' ">..\..\..\..\monodevelop\main\build\bin</MDBinDir>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <HintPath>$(GtkInstallRootDirectory)\gdk-sharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <HintPath>$(GtkInstallRootDirectory)\glib-sharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <HintPath>$(GtkInstallRootDirectory)\gtk-sharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Mono.Addins">
       <Private>False</Private>
       <HintPath>$(MDBinDir)\Mono.Addins.dll</HintPath>
