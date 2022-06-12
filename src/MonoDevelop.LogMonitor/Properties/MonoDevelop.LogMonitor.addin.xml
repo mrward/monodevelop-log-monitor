@@ -3,7 +3,7 @@
 		<Import assembly="MonoDevelop.LogMonitor.dll" />
 	</Runtime>
 
-	<Extension path="/MonoDevelop/Ide/StartupHandlers">
+	<Extension path="/MonoDevelop/Ide/PreStartupHandlers">
 		<Class class="MonoDevelop.LogMonitor.LogMonitorStartupHandler" />
 	</Extension>
 
