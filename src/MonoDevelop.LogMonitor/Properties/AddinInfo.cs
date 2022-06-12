@@ -34,5 +34,5 @@ using Mono.Addins;
 [assembly: AddinName ("Log Monitor")]
 [assembly: AddinDescription ("Monitors the IDE log for errors")]
 
-[assembly: AddinDependency ("Core", "17.0")]
-[assembly: AddinDependency ("Ide", "17.0")]
+[assembly: AddinDependency ("Core", "17.3")]
+[assembly: AddinDependency ("Ide", "17.3")]
