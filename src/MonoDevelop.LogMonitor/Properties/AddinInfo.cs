@@ -28,11 +28,11 @@ using Mono.Addins;
 [assembly: Addin (
 	"LogMonitor",
 	Namespace = "MonoDevelop",
-	Version = "0.7",
+	Version = "0.8",
 	Category = "IDE extensions")]
 
 [assembly: AddinName ("Log Monitor")]
 [assembly: AddinDescription ("Monitors the IDE log for errors")]
 
-[assembly: AddinDependency ("Core", "17.3")]
-[assembly: AddinDependency ("Ide", "17.3")]
+[assembly: AddinDependency ("Core", "17.5")]
+[assembly: AddinDependency ("Ide", "17.5")]
